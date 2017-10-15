@@ -212,7 +212,15 @@ static void bcm2835_peripherals_realize(DeviceState *dev, Error **errp)
         error_propagate(errp, err);
         return;
     }
-
+    // check if parameters are valid
+    if (ram_size < vcram_size + 64*1024*1024) {
+        error_setg(errp, "%s: not enough ram for VideoCore",
+                   __func__);
+        return;
+    }
+    // if vcram_size is bigger than ram_size, this will silently overflow
+    // and generate a not very informative "Parameter 'vcram-base' expects
+    // uint32_t" message...
     object_property_set_uint(OBJECT(&s->fb), ram_size - vcram_size,
                              "vcram-base", &err);
     if (err) {

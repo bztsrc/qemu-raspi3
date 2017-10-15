@@ -17,12 +17,6 @@
 #include "hw/sysbus.h"
 #include "exec/address-spaces.h"
 
-/* Peripheral base address seen by the CPU */
-#define BCM2836_PERI_BASE       0x3F000000
-
-/* "QA7" (Pi2) interrupt controller and mailboxes etc. */
-#define BCM2836_CONTROL_BASE    0x40000000
-
 static void bcm2836_init(Object *obj)
 {
     BCM2836State *s = BCM2836(obj);

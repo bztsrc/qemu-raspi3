@@ -20,6 +20,12 @@
 
 #define BCM2836_NCPUS 4
 
+/* Peripheral base address seen by the CPU */
+#define BCM2836_PERI_BASE       0x3F000000
+
+/* "QA7" (Pi2/Pi8) interrupt controller and mailboxes etc. */
+#define BCM2836_CONTROL_BASE    0x40000000
+
 typedef struct BCM2836State {
     /*< private >*/
     DeviceState parent_obj;

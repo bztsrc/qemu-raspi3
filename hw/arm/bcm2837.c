@@ -14,6 +14,7 @@
 #include "qapi/error.h"
 #include "qemu-common.h"
 #include "cpu.h"
+#include "hw/arm/bcm2836.h"
 #include "hw/arm/bcm2837.h"
 #include "hw/arm/raspi_platform.h"
 #include "hw/sysbus.h"
@@ -24,18 +25,12 @@
  * difference is the replacement of the ARMv7 quad core cluster with a quad-core ARM Cortex A53
  * (ARMv8) cluster. So we use cortex-a53- here. */
 
-/* Peripheral base address seen by the CPU */
-#define BCM2836_PERI_BASE       0x3F000000
-
-/* "QA8" (Pi3) interrupt controller and mailboxes etc. */
-#define BCM2836_CONTROL_BASE    0x40000000
- 
 static void bcm2837_init(Object *obj)
 {
-    BCM2837State *s = BCM2837(obj);
+    BCM2836State *s = BCM2837(obj);
     int n;
 
-    for (n = 0; n < BCM2837_NCPUS; n++) {
+    for (n = 0; n < BCM2836_NCPUS; n++) {
         object_initialize(&s->cpus[n], sizeof(s->cpus[n]),
                           "cortex-a53-" TYPE_ARM_CPU);
         object_property_add_child(obj, "cpu[*]", OBJECT(&s->cpus[n]),
@@ -59,7 +54,7 @@ static void bcm2837_init(Object *obj)
 
 static void bcm2837_realize(DeviceState *dev, Error **errp)
 {
-    BCM2837State *s = BCM2837(dev);
+    BCM2836State *s = BCM2837(dev);
     Object *obj;
     Error *err = NULL;
     int n;
@@ -109,7 +104,7 @@ static void bcm2837_realize(DeviceState *dev, Error **errp)
     sysbus_connect_irq(SYS_BUS_DEVICE(&s->peripherals), 1,
         qdev_get_gpio_in_named(DEVICE(&s->control), "gpu-fiq", 0));
 
-    for (n = 0; n < BCM2837_NCPUS; n++) {
+    for (n = 0; n < BCM2836_NCPUS; n++) {
         /* Mirror bcm2836, which has clusterid set to 0xf
          * TODO: this should be converted to a property of ARM_CPU
          */
@@ -157,14 +152,13 @@ static void bcm2837_realize(DeviceState *dev, Error **errp)
 }
 
 static Property bcm2837_props[] = {
-    DEFINE_PROP_UINT32("enabled-cpus", BCM2837State, enabled_cpus, BCM2837_NCPUS),
+    DEFINE_PROP_UINT32("enabled-cpus", BCM2836State, enabled_cpus, BCM2836_NCPUS),
     DEFINE_PROP_END_OF_LIST()
 };
 
 static void bcm2837_class_init(ObjectClass *oc, void *data)
 {
     DeviceClass *dc = DEVICE_CLASS(oc);
-
     dc->props = bcm2837_props;
     dc->realize = bcm2837_realize;
 }
@@ -172,7 +166,7 @@ static void bcm2837_class_init(ObjectClass *oc, void *data)
 static const TypeInfo bcm2837_type_info = {
     .name = TYPE_BCM2837,
     .parent = TYPE_SYS_BUS_DEVICE,
-    .instance_size = sizeof(BCM2837State),
+    .instance_size = sizeof(BCM2836State),
     .instance_init = bcm2837_init,
     .class_init = bcm2837_class_init,
 };
