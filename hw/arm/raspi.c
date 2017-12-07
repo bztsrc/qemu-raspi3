@@ -77,7 +77,7 @@ static void reset_secondary(ARMCPU *cpu, const struct arm_boot_info *info)
 static void setup_boot(MachineState *machine, int version, size_t ram_size)
 {
     static struct arm_boot_info binfo;
-    hwaddr entry;
+    hwaddr entry = FIRMWARE_ADDR_2;
     int r;
 
     binfo.board_id = raspi_boardid[version];
@@ -93,7 +93,8 @@ static void setup_boot(MachineState *machine, int version, size_t ram_size)
         binfo.smp_loader_start = SMPBOOT_ADDR;
         binfo.write_secondary_boot = write_smpboot;
         binfo.secondary_cpu_reset_hook = reset_secondary;
-        entry = version == 2 ? FIRMWARE_ADDR_2 : FIRMWARE_ADDR_3;
+        if (version == 3)
+            entry = FIRMWARE_ADDR_3;
     }
 
     /* If the user specified a "firmware" image (e.g. UEFI), we bypass
