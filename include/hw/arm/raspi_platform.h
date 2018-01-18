@@ -1,5 +1,5 @@
 /*
- * bcm2708 aka bcm2835/2836/2837 aka Raspberry Pi/Pi2 SoC platform defines
+ * bcm2708 aka bcm2835/2836 aka Raspberry Pi/Pi2 SoC platform defines
  *
  * These definitions are derived from those in Raspbian Linux at
  * arch/arm/mach-{bcm2708,bcm2709}/include/mach/platform.h
