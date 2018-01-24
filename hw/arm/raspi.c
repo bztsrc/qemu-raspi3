@@ -124,11 +124,6 @@ static void raspi_init(MachineState *machine)
     BlockBackend *blk;
     BusState *bus;
     DeviceState *carddev;
-    // this is brainf*cked. Why, oh why couldn't just simply pass
-    // the MachineClass object to the initialization method?!? And
-    // why does find_default_machine() segfaulting, and MACHINE_TYPE(machine)
-    // miserably fail? Why can't people design proper interfaces anymore...?
-    // What happened to Keep It Simple, Stupid???????
     int version = machine->cpu_type==ARM_CPU_TYPE_NAME("cortex-a15")? 2 : 3;
 
     object_initialize(&s->soc, sizeof(s->soc), TYPE_BCM2836);
@@ -176,9 +171,9 @@ static void raspi2_machine_init(MachineClass *mc)
     mc->no_floppy = 1;
     mc->no_cdrom = 1;
     mc->max_cpus = BCM2836_NCPUS;
-//    mc->min_cpus = BCM2836_NCPUS;
-//    mc->default_cpus = BCM2836_NCPUS;
+    mc->min_cpus = BCM2836_NCPUS;
     mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a15");
+    mc->default_cpus = BCM2836_NCPUS;
     mc->default_ram_size = 1024 * 1024 * 1024;
     mc->ignore_memory_transaction_failures = true;
 };
@@ -193,9 +188,9 @@ static void raspi3_machine_init(MachineClass *mc)
     mc->no_floppy = 1;
     mc->no_cdrom = 1;
     mc->max_cpus = BCM2836_NCPUS;
-//    mc->min_cpus = BCM2836_NCPUS;
-//    mc->default_cpus = BCM2836_NCPUS;
+    mc->min_cpus = BCM2836_NCPUS;
     mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a53");
+    mc->default_cpus = BCM2836_NCPUS;
     mc->default_ram_size = 1024 * 1024 * 1024;
     mc->ignore_memory_transaction_failures = true;
 };
