@@ -4,6 +4,9 @@ QEMU Raspberry Pi 3 support
 Adds machine type "raspi3" to boot AArch64 kernels in qemu. This patch is provided as-is, without any
 kind of warranty in the hope that it will be useful.
 
+*IMPORTANT NOTE: Thanks to a good soul, this patch made it through to qemu mainline. As a consequence, sooner or later every
+qemu binary will support "-M raspi3", therefore these patches won't be needed any more.*
+
 Usage
 -----
 
