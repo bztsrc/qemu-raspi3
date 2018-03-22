@@ -5,7 +5,7 @@ Adds machine type "raspi3" to boot AArch64 kernels in qemu. This patch is provid
 kind of warranty in the hope that it will be useful.
 
 *IMPORTANT NOTE: Thanks to a good soul, this patch made it through to qemu mainline. As a consequence, sooner or later every
-qemu binary will support "-M raspi3", therefore these patches won't be needed any more.*
+qemu binary will support "-M raspi3", therefore these patches not needed any more.*
 
 Usage
 -----
