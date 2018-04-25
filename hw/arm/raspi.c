@@ -31,7 +31,7 @@
 static const int raspi_boardid[] = {[1] = 0xc42, [2] = 0xc43, [3] = 0xc44};
 
 typedef struct RasPiState {
-    BCM2836State soc;
+    BCM283XState soc;
     MemoryRegion ram;
 } RasPiState;
 
@@ -170,10 +170,10 @@ static void raspi2_machine_init(MachineClass *mc)
     mc->no_parallel = 1;
     mc->no_floppy = 1;
     mc->no_cdrom = 1;
-    mc->max_cpus = BCM2836_NCPUS;
-    mc->min_cpus = BCM2836_NCPUS;
+    mc->max_cpus = BCM283X_NCPUS;
+    mc->min_cpus = BCM283X_NCPUS;
     mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a15");
-    mc->default_cpus = BCM2836_NCPUS;
+    mc->default_cpus = BCM283X_NCPUS;
     mc->default_ram_size = 1024 * 1024 * 1024;
     mc->ignore_memory_transaction_failures = true;
 };
@@ -187,10 +187,10 @@ static void raspi3_machine_init(MachineClass *mc)
     mc->no_parallel = 1;
     mc->no_floppy = 1;
     mc->no_cdrom = 1;
-    mc->max_cpus = BCM2836_NCPUS;
-    mc->min_cpus = BCM2836_NCPUS;
+    mc->max_cpus = BCM283X_NCPUS;
+    mc->min_cpus = BCM283X_NCPUS;
     mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a53");
-    mc->default_cpus = BCM2836_NCPUS;
+    mc->default_cpus = BCM283X_NCPUS;
     mc->default_ram_size = 1024 * 1024 * 1024;
     mc->ignore_memory_transaction_failures = true;
 };
